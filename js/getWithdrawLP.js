@@ -81,7 +81,7 @@ getBreeds().then(async () => {
         })
         // console.log("id ",id);
       // }
-      await waitFor(1000);
+      await waitFor(500);
     });
     console.log('Done');
   }

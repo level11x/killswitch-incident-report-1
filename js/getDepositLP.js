@@ -33,7 +33,7 @@ let getBreeds = async () => {
         //   console.log(data);
         // }).catch(e => console.log(e));
 
-        if (data.to.toUpperCase() === "0x0576961aAc8eb06F6A6A6975dFB70cE51065880D".toUpperCase()) {
+        if (data.to.toUpperCase() === "0x0576961aAc8eb06F6A6A6975dFB70cE51065880D".toUpperCase() && data.from.toUpperCase() !== "0x73feaa1ee314f8c655e354234017be2193c9e24e".toUpperCase()) {
           if (data.tokenSymbol === "Cake-LP") {
             // i++;
             // console.log(data);
