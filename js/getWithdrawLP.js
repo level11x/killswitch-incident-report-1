@@ -14,41 +14,26 @@ var hashs = []
 var values = []
 var i = 0
 let getBreeds = async () => {
-    try {
-      return axios.get('https://api.bscscan.com/api?module=account&action=tokentx&address=0x0576961aAc8eb06F6A6A6975dFB70cE51065880D&startblock=1&endblock=99999999&sort=desc&apikey=481TIWDQFUPQ91WBT8R21XA21I6GUSYYMG')
-      .then(t => {
-        var datas = t.data.result
-        
-        // phuketAddr = "0x4f4326e498fe3DB388d06A330C6F4C94497E8995"
-        // myAddr = "0x287c5b2D837A32496ae1a976c17cBC335a366BB4"
-        datas.map((data)=>{
-        
-
+  try {
+    return axios.get('https://api.bscscan.com/api?module=account&action=tokentx&address=0x0576961aAc8eb06F6A6A6975dFB70cE51065880D&startblock=1&endblock=99999999&sort=desc&apikey=481TIWDQFUPQ91WBT8R21XA21I6GUSYYMG')
+    .then(t => {
+      var datas = t.data.result
+      datas.map((data)=>{
         if (data.from.toUpperCase() === "0x0576961aAc8eb06F6A6A6975dFB70cE51065880D".toUpperCase()) {
           if (data.to.toUpperCase() === "0xa527a61703d82139f8a06bc30097cc9caa2df5a6".toUpperCase()) {
-            if (data.tokenSymbol === "Cake-LP") {
+            if (data.contractAddress.toUpperCase() === "0xa527a61703d82139f8a06bc30097cc9caa2df5a6".toUpperCase()) {
               hashs.push(data.hash)
               values.push(data.value)          
             }
           }
-         
+          
         }
-          // if (data.to.toUpperCase() === "0x0576961aAc8eb06F6A6A6975dFB70cE51065880D".toUpperCase()) {
-          //   if (data.from.toUpperCase() === phuketAddr.toUpperCase()) {
-          //     console.log(data)   
-          //   }
-            
-          // }
-
-       })
-        
-      }).finally(() => {console.log(i);})
-    } catch (error) {
-      console.error(error)
-    }
-
-    
+      })
+    }).finally(() => {console.log(i);})
+  } catch (error) {
+    console.error(error)
   }
+}
 
 
 getBreeds().then(async () => {
@@ -58,7 +43,6 @@ getBreeds().then(async () => {
   const start = async () => {
     await asyncForEach(hashs, async (hash,id) => {
       const url = `https://api.bscscan.com/api?module=account&action=txlistinternal&txhash=${hash}&apikey=481TIWDQFUPQ91WBT8R21XA21I6GUSYYMG`
-      // if (id < 2) {
         const res = await axios.get(url)
         let datas = res.data.result
         datas.map((data) => {
@@ -79,8 +63,6 @@ getBreeds().then(async () => {
             
           }
         })
-        // console.log("id ",id);
-      // }
       await waitFor(500);
     });
     console.log('Done');
@@ -95,5 +77,3 @@ async function asyncForEach(array, callback) {
     await callback(array[index], index, array);
   }
 }
-
-
